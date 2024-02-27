@@ -1,1 +1,2 @@
 1. UUID
+2. Required Args constructor
