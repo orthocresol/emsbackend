@@ -37,5 +37,22 @@ public class AdminController {
         return ResponseEntity.ok(users);
     }
 
+    @GetMapping("lock/{id}")
+    public ResponseEntity<String> lockUser(@PathVariable Integer id){
+        Optional<User> user = repository.findById(id);
+        User nonNulluser = user.get();
+        nonNulluser.setLock("LOCK");
+        repository.save(nonNulluser);
+        return ResponseEntity.ok("Success");
+    }
+
+    @GetMapping("unlock/{id}")
+    public ResponseEntity<String> unlockUser(@PathVariable Integer id){
+        Optional<User> user = repository.findById(id);
+        User nonNulluser = user.get();
+        nonNulluser.setLock("UNLOCK");
+        repository.save(nonNulluser);
+        return ResponseEntity.ok("Success");
+    }
 
 }

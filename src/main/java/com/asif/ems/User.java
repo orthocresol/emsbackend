@@ -28,7 +28,13 @@ public class User implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private Role role;
-
+    private String phone;
+    private String dept;
+    private String studentID;
+    private String batch;
+    private String faculty;
+    private String designation;
+    private String lock;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -52,7 +58,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return lock.equals("UNLOCK");
     }
 
     @Override
