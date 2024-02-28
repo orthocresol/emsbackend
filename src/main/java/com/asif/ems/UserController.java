@@ -30,4 +30,16 @@ public class UserController {
         repository.save(nonNullUser);
         return ResponseEntity.ok("Success");
     }
+
+    @PostMapping("updateprofileteacher")
+    public ResponseEntity<String> update(@RequestBody EditTeacherProfile profile){
+        Optional<User> user = repository.findByEmail(profile.getEmail());
+        User nonNullUser = user.get();
+        nonNullUser.setName(profile.getName());
+        nonNullUser.setPhone(profile.getPhone());
+        nonNullUser.setFaculty(profile.getFaculty());
+        nonNullUser.setDesignation(profile.getDesignation());
+        repository.save(nonNullUser);
+        return ResponseEntity.ok("Success");
+    }
 }
