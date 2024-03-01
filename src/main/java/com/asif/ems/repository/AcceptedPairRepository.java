@@ -1,5 +1,6 @@
-package com.asif.ems;
+package com.asif.ems.repository;
 
+import com.asif.ems.entities.AcceptedPair;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

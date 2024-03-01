@@ -1,9 +1,10 @@
-package com.asif.ems;
+package com.asif.ems.controller;
 
+import com.asif.ems.entities.Role;
+import com.asif.ems.entities.User;
+import com.asif.ems.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -14,12 +15,7 @@ import java.util.Optional;
 public class DemoController {
     @Autowired
     UserRepository repository;
-    @GetMapping("/okay")
-    public ResponseEntity<String> sayHello(){
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String username = authentication.getName();
-        return ResponseEntity.ok("sex");
-    }
+
 
     @GetMapping("updateroleteacher/{id}")
     public ResponseEntity<String> updateRolesToTeacher(@PathVariable Integer id){

@@ -1,4 +1,4 @@
-package com.asif.ems;
+package com.asif.ems.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

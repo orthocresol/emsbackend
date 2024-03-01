@@ -1,5 +1,6 @@
-package com.asif.ems;
+package com.asif.ems.config;
 
+import com.asif.ems.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

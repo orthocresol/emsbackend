@@ -1,4 +1,4 @@
-package com.asif.ems;
+package com.asif.ems.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -7,11 +7,10 @@ import lombok.Data;
 
 @Data
 @Entity
-public class AdvisorRequests {
+public class AcceptedPair {
     @Id
     @GeneratedValue
     private Integer id;
-    private String emailTeacher;
     private String emailStudent;
-
+    private String emailTeacher;
 }

@@ -1,4 +1,4 @@
-package com.asif.ems;
+package com.asif.ems.entities;
 
 public enum Role {
     USER,

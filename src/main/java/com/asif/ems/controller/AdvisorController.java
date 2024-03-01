@@ -1,8 +1,13 @@
-package com.asif.ems;
+package com.asif.ems.controller;
 
+import com.asif.ems.entities.AcceptedPair;
+import com.asif.ems.entities.AdvisorRequests;
+import com.asif.ems.entities.User;
+import com.asif.ems.repository.AcceptedPairRepository;
+import com.asif.ems.repository.AdvisorRequestRepository;
+import com.asif.ems.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

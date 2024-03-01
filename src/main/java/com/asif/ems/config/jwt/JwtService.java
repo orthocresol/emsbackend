@@ -1,4 +1,4 @@
-package com.asif.ems;
+package com.asif.ems.config.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

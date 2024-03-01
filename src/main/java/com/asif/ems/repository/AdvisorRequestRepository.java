@@ -1,10 +1,10 @@
-package com.asif.ems;
+package com.asif.ems.repository;
 
+import com.asif.ems.entities.AdvisorRequests;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 public interface AdvisorRequestRepository extends JpaRepository<AdvisorRequests, Integer> {
