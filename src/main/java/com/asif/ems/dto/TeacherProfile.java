@@ -3,11 +3,10 @@ package com.asif.ems.dto;
 import lombok.Data;
 
 @Data
-public class EditStudentProfile {
+public class TeacherProfile {
     private String name;
     private String phone;
     private String email;
-    private String dept;
-    private String batch;
-    private String studentID;
+    private String faculty;
+    private String designation;
 }

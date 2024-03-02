@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.*;
 public class AuthenticationController {
 
     private final AuthenticationService service;
-    @PostMapping("/register")
+    @PostMapping("registration")
     public ResponseEntity<AuthenticationResponse> register(
             @RequestBody RegisterRequest request
     ){
         return ResponseEntity.ok(service.register(request));
     }
 
-    @PostMapping("/login")
+    @PostMapping("login")
     public ResponseEntity<AuthenticationResponse> login(
             @RequestBody LoginRequest request
     ){

@@ -1,3 +1,6 @@
 1. UUID
 2. Required Args constructor
 3. Exception generate from invalid users
+4. you are not assigned to roles page
+5. List of available teachers have fault
+6. Service layers
