@@ -88,7 +88,7 @@ public class TeacherController {
         List<AdvisorRequests> advisorRequests = advisorRequestRepository.findByEmailStudent(request.getEmailStudent());
         for(int i = 0; i < advisorRequests.size(); i++){
             AdvisorRequests advisorRequests1 = advisorRequests.get(i);
-            repository.deleteById(advisorRequests1.getId());
+            advisorRequestRepository.deleteById(advisorRequests1.getId());
         }
         return ResponseEntity.ok("Success");
 
@@ -101,7 +101,7 @@ public class TeacherController {
         for(int i = 0; i < advisorRequests.size(); i++){
             AdvisorRequests advisorRequests1 = advisorRequests.get(i);
             if(advisorRequests1.getEmailStudent().equals(request.getEmailStudent())){
-                repository.deleteById(advisorRequests1.getId());
+                advisorRequestRepository.deleteById(advisorRequests1.getId());
             }
         }
         return ResponseEntity.ok("Success");
