@@ -28,11 +28,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
     private String phone;
-    private String dept;
-    private String studentID;
-    private String batch;
-    private String faculty;
-    private String designation;
     private String lock;
 
     @Override

@@ -1,20 +1,16 @@
 package com.asif.ems.controller;
 
 import com.asif.ems.dto.StudentProfile;
-import com.asif.ems.entities.AcceptedPair;
-import com.asif.ems.entities.AdvisorRequests;
-import com.asif.ems.entities.Role;
+import com.asif.ems.dto.TeacherProfile;
+import com.asif.ems.entities.AdvisorRequest;
+import com.asif.ems.entities.Teacher;
 import com.asif.ems.entities.User;
-import com.asif.ems.repository.AcceptedPairRepository;
-import com.asif.ems.repository.AdvisorRequestRepository;
-import com.asif.ems.repository.UserRepository;
+import com.asif.ems.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/students")
@@ -25,12 +21,12 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping
-    public ResponseEntity<List<User>> getAllStudents(){
+    public ResponseEntity<List<StudentProfile>> getAllStudents(){
         return studentService.getAllStudents();
     }
 
     @GetMapping("{email}")
-    public ResponseEntity<User> getInfo (@PathVariable String email){
+    public ResponseEntity<StudentProfile> getInfo (@PathVariable String email){
         return studentService.getInfo(email);
     }
 
@@ -40,23 +36,23 @@ public class StudentController {
     }
 
     @GetMapping("{email}/advisor")
-    public ResponseEntity<User> findAdvisor(@PathVariable String email){
+    public ResponseEntity<TeacherProfile> findAdvisor(@PathVariable String email){
         return studentService.findAdvisor(email);
     }
 
     @GetMapping("{email}/requested-teachers")
-    public ResponseEntity<List<User>> getAllSendRequestList(@PathVariable String email) {
+    public ResponseEntity<List<TeacherProfile>> getAllSendRequestList(@PathVariable String email) {
         return studentService.getAllSendRequestList(email);
     }
 
     @PostMapping("{student-id}/available-teachers/{teacher-id}")
-    public ResponseEntity<String> addRequest (@RequestBody AdvisorRequests request){
+    public ResponseEntity<String> addRequest (@RequestBody AdvisorRequest request){
         return studentService.addRequest(request);
 
     }
 
     @GetMapping("{email}/available-teachers")
-    public ResponseEntity<List<User>> getAvailableTeachers(@PathVariable String email){
+    public ResponseEntity<List<TeacherProfile>> getAvailableTeachers(@PathVariable String email){
         return studentService.getAvailableTeachers(email);
     }
 }

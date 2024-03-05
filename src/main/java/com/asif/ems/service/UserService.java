@@ -1,7 +1,11 @@
-package com.asif.ems.controller;
+package com.asif.ems.service;
 
 import com.asif.ems.entities.Role;
+import com.asif.ems.entities.Student;
+import com.asif.ems.entities.Teacher;
 import com.asif.ems.entities.User;
+import com.asif.ems.repository.StudentRepository;
+import com.asif.ems.repository.TeacherRepository;
 import com.asif.ems.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -9,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -18,14 +21,24 @@ import java.util.Optional;
 @Service
 public class UserService {
     @Autowired
-    private UserRepository repository;
-    @GetMapping
+    private UserRepository userRepository;
+    @Autowired
+    private StudentRepository studentRepository;
+    @Autowired
+    private TeacherRepository teacherRepository;
+
+
     public ResponseEntity<List<User>> getAllUsers(){
-        List<User> users = repository.findByRole(Role.USER);
+        List<User> users = userRepository.findByRole(Role.USER);
         return ResponseEntity.ok(users);
     }
 
-    @PutMapping("/{id}")
+    public ResponseEntity<User> getAUser(String email){
+        Optional<User> _user = userRepository.findByEmail(email);
+        User user = _user.get();
+        return ResponseEntity.ok(user);
+    }
+
     public ResponseEntity<String> updateUser(Integer id, HashMap<String, String> action){
         if(action.get("action").equals("lock")){
             lockUser(id);
@@ -44,30 +57,44 @@ public class UserService {
 
 
     public void lockUser(Integer id){
-        Optional<User> user = repository.findById(id);
+        Optional<User> user = userRepository.findById(id);
         User nonNulluser = user.get();
         nonNulluser.setLock("LOCK");
-        repository.save(nonNulluser);
+        userRepository.save(nonNulluser);
     }
 
     public void unlockUser(Integer id){
-        Optional<User> user = repository.findById(id);
+        Optional<User> user = userRepository.findById(id);
         User nonNulluser = user.get();
         nonNulluser.setLock("UNLOCK");
-        repository.save(nonNulluser);
+        userRepository.save(nonNulluser);
     }
 
     public void updateRolesToTeacher(Integer id){
-        Optional<User> user = repository.findById(id);
+        Optional<User> user = userRepository.findById(id);
         User nonNullUser = user.get();
         nonNullUser.setRole(Role.TEACHER);
-        repository.save(nonNullUser);
+        userRepository.save(nonNullUser);
+
+        Teacher teacher = new Teacher();
+        teacher.setId(nonNullUser.getId());
+        teacher.setFaculty("No faculty assigned");
+        teacher.setDesignation("No designation assigned");
+        teacherRepository.save(teacher);
     }
 
     public void updateRolesToStudent(Integer id){
-        Optional<User> user = repository.findById(id);
+        Optional<User> user = userRepository.findById(id);
         User nonNullUser = user.get();
         nonNullUser.setRole(Role.STUDENT);
-        repository.save(nonNullUser);
+        userRepository.save(nonNullUser);
+
+        Student student = new Student();
+        student.setId(nonNullUser.getId());
+        student.setDept("No dept assigned");
+        student.setStudentID("No student id assigned");
+        student.setBatch("No batch assigned");
+        student.setAdvisorID(-1);
+        studentRepository.save(student);
     }
 }
