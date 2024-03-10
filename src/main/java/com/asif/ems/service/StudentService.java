@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class StudentService {
@@ -51,8 +52,8 @@ public class StudentService {
 
     }
 
-    public ResponseEntity<StudentProfile> getInfo (String email){
-        Optional<User> _user = userRepository.findByEmail(email);
+    public ResponseEntity<StudentProfile> getInfo (UUID id){
+        Optional<User> _user = userRepository.findById(id);
         User user = _user.get();
 
         StudentProfile studentProfile = new StudentProfile();
@@ -73,8 +74,8 @@ public class StudentService {
         return ResponseEntity.ok(studentProfile);
     }
 
-    public ResponseEntity<String> update(StudentProfile profile){
-        Optional<User> _user = userRepository.findByEmail(profile.getEmail());
+    public ResponseEntity<String> update(UUID id, StudentProfile profile){
+        Optional<User> _user = userRepository.findById(id);
 
         User user = _user.get();
         Optional<Student> _student = studentRepository.findById(user.getId());
@@ -92,8 +93,8 @@ public class StudentService {
         return ResponseEntity.ok("Success");
     }
 
-    public ResponseEntity<TeacherProfile> findAdvisor(String email){
-        Optional<User> _user = userRepository.findByEmail(email);
+    public ResponseEntity<TeacherProfile> findAdvisor(UUID id){
+        Optional<User> _user = userRepository.findById(id);
         User user = _user.get();
         Optional<Student> _student = studentRepository.findById(user.getId());
         Student student = _student.get();
@@ -113,8 +114,10 @@ public class StudentService {
         return ResponseEntity.ok(teacherProfile);
     }
 
-    public ResponseEntity<List<TeacherProfile>> getAllSendRequestList(String email) {
-        List<AdvisorRequest> advisorRequests = advisorRequestRepository.findByEmailStudent(email);
+    public ResponseEntity<List<TeacherProfile>> getAllSendRequestList(UUID id) {
+        Optional<User> __user = userRepository.findById(id);
+        User user_ = __user.get();
+        List<AdvisorRequest> advisorRequests = advisorRequestRepository.findByEmailStudent(user_.getEmail());
         List<TeacherProfile> finalResult = new ArrayList<>();
 
         for(int i = 0; i < advisorRequests.size(); i++){
@@ -150,15 +153,15 @@ public class StudentService {
 
     }
 
-    public ResponseEntity<List<TeacherProfile>> getAvailableTeachers(String email){
+    public ResponseEntity<List<TeacherProfile>> getAvailableTeachers(UUID id){
 
-        Optional<User> _userStudent = userRepository.findByEmail(email);
+        Optional<User> _userStudent = userRepository.findById(id);
         User userStudent = _userStudent.get();
 
         Optional<Student> _student = studentRepository.findById(userStudent.getId());
         Student student = _student.get();
 
-        List<AdvisorRequest> advisorRequests = advisorRequestRepository.findByEmailStudent(email);
+        List<AdvisorRequest> advisorRequests = advisorRequestRepository.findByEmailStudent(userStudent.getEmail());
         List<User> requestedTeachers = new ArrayList<>();
         for(int i = 0; i < advisorRequests.size(); i++){
             AdvisorRequest advisorRequest = advisorRequests.get(i);
@@ -178,11 +181,11 @@ public class StudentService {
             boolean isExist = false;
             for(int j = 0; j < requestedTeachers.size(); j++){
                 User requestedTeacher = requestedTeachers.get(j);
-                if(requestedTeacher.getId().intValue() == teacher.getId().intValue()){
+                if(requestedTeacher.getId().equals(teacher.getId())){
                     isExist = true;
                 }
             }
-            if(teacher.getId().intValue() == student.getAdvisorID().intValue()) continue;
+            if(teacher.getId().equals(student.getAdvisorID())) continue;
             if(!isExist) {
                 availableTeachers.add(teacher);
             }

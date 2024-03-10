@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/teachers")
@@ -34,14 +35,14 @@ public class TeacherController {
         return teacherService.getAllTeachers();
     }
 
-    @GetMapping("{email}")
-    public ResponseEntity<TeacherProfile> getInfo (@PathVariable String email){
-        return teacherService.getInfo(email);
+    @GetMapping("{id}")
+    public ResponseEntity<TeacherProfile> getInfo (@PathVariable UUID id){
+        return teacherService.getInfo(id);
     }
 
-    @PutMapping("{email}")
-    public ResponseEntity<String> update(@RequestBody TeacherProfile profile){
-        return teacherService.update(profile);
+    @PutMapping("{id}")
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody TeacherProfile profile){
+        return teacherService.update(id, profile);
     }
 
     @GetMapping("{email}/enrolled-students")
@@ -49,18 +50,18 @@ public class TeacherController {
         return teacherService.getEnrolledStudents(email);
     }
 
-    @GetMapping("{email}/requested-students")
-    public ResponseEntity<List<StudentProfile>> getRequestedStudents(@PathVariable String email) {
-        return teacherService.getRequestedStudents(email);
+    @GetMapping("{id}/requested-students")
+    public ResponseEntity<List<StudentProfile>> getRequestedStudents(@PathVariable UUID id) {
+        return teacherService.getRequestedStudents(id);
     }
 
-    @PostMapping("{teacher-id}/requested-students/{student-id}")
+    @PostMapping("{teacher-id}/requested-students")
     public ResponseEntity<String> acceptRequest (@RequestBody AcceptedPair request){
         return teacherService.acceptRequest(request);
 
     }
 
-    @PutMapping("{teacher-id}/requested-students/{student-id}")
+    @PutMapping("{teacher-id}/requested-students")
     public ResponseEntity<String> rejectRequest (@RequestBody AdvisorRequest request){
         return teacherService.rejectRequest(request);
 

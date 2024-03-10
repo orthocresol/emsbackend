@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 
 
 @RestController
@@ -21,13 +22,13 @@ public class UserController {
         return userService.getAllUsers();
     }
 
-    @GetMapping("/{email}")
-    public  ResponseEntity<User> getAUser(@PathVariable String email){
-        return userService.getAUser(email);
+    @GetMapping("/{id}")
+    public  ResponseEntity<User> getAUser(@PathVariable UUID id){
+        return userService.getAUser(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<String> updateUser(@PathVariable Integer id, @RequestBody HashMap<String, String> action){
+    public ResponseEntity<String> updateUser(@PathVariable UUID id, @RequestBody HashMap<String, String> action){
         return userService.updateUser(id,action);
     }
 }

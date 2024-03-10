@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class TeacherService {
@@ -50,8 +51,8 @@ public class TeacherService {
         return ResponseEntity.ok(teacherProfiles);
     }
 
-    public ResponseEntity<TeacherProfile> getInfo (String email){
-        Optional<User> _user = userRepository.findByEmail(email);
+    public ResponseEntity<TeacherProfile> getInfo (UUID id){
+        Optional<User> _user = userRepository.findById(id);
         User user = _user.get();
 
         TeacherProfile teacherProfile = new TeacherProfile();
@@ -70,8 +71,8 @@ public class TeacherService {
         return ResponseEntity.ok(teacherProfile);
     }
 
-    public ResponseEntity<String> update(TeacherProfile profile){
-        Optional<User> _user = userRepository.findByEmail(profile.getEmail());
+    public ResponseEntity<String> update(UUID id, TeacherProfile profile){
+        Optional<User> _user = userRepository.findById(id);
 
         User user = _user.get();
         Optional<Teacher> _teacher = teacherRepository.findById(user.getId());
@@ -117,8 +118,10 @@ public class TeacherService {
         return ResponseEntity.ok(result);
     }
 
-    public ResponseEntity<List<StudentProfile>> getRequestedStudents(String email) {
-        List<AdvisorRequest> advisorRequests = advisorRequestRepository.findByEmailTeacher(email);
+    public ResponseEntity<List<StudentProfile>> getRequestedStudents(UUID id) {
+        Optional<User> __user = userRepository.findById(id);
+        User user_ = __user.get();
+        List<AdvisorRequest> advisorRequests = advisorRequestRepository.findByEmailTeacher(user_.getEmail());
         List<StudentProfile> finalResult = new ArrayList<>();
 
         for(int i = 0; i < advisorRequests.size(); i++){

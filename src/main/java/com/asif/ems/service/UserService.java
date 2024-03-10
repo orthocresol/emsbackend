@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -33,13 +34,13 @@ public class UserService {
         return ResponseEntity.ok(users);
     }
 
-    public ResponseEntity<User> getAUser(String email){
-        Optional<User> _user = userRepository.findByEmail(email);
+    public ResponseEntity<User> getAUser(UUID id){
+        Optional<User> _user = userRepository.findById(id);
         User user = _user.get();
         return ResponseEntity.ok(user);
     }
 
-    public ResponseEntity<String> updateUser(Integer id, HashMap<String, String> action){
+    public ResponseEntity<String> updateUser(UUID id, HashMap<String, String> action){
         if(action.get("action").equals("lock")){
             lockUser(id);
         }
@@ -56,21 +57,21 @@ public class UserService {
     }
 
 
-    public void lockUser(Integer id){
+    public void lockUser(UUID id){
         Optional<User> user = userRepository.findById(id);
         User nonNulluser = user.get();
         nonNulluser.setLock("LOCK");
         userRepository.save(nonNulluser);
     }
 
-    public void unlockUser(Integer id){
+    public void unlockUser(UUID id){
         Optional<User> user = userRepository.findById(id);
         User nonNulluser = user.get();
         nonNulluser.setLock("UNLOCK");
         userRepository.save(nonNulluser);
     }
 
-    public void updateRolesToTeacher(Integer id){
+    public void updateRolesToTeacher(UUID id){
         Optional<User> user = userRepository.findById(id);
         User nonNullUser = user.get();
         nonNullUser.setRole(Role.TEACHER);
@@ -83,7 +84,7 @@ public class UserService {
         teacherRepository.save(teacher);
     }
 
-    public void updateRolesToStudent(Integer id){
+    public void updateRolesToStudent(UUID id){
         Optional<User> user = userRepository.findById(id);
         User nonNullUser = user.get();
         nonNullUser.setRole(Role.STUDENT);
@@ -94,7 +95,7 @@ public class UserService {
         student.setDept("No dept assigned");
         student.setStudentID("No student id assigned");
         student.setBatch("No batch assigned");
-        student.setAdvisorID(-1);
+
         studentRepository.save(student);
     }
 }

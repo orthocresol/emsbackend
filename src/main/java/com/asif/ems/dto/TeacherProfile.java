@@ -2,9 +2,11 @@ package com.asif.ems.dto;
 
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 public class TeacherProfile {
-    private Integer id;
+    private UUID id;
     private String name;
     private String phone;
     private String email;

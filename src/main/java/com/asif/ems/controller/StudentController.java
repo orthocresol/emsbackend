@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/students")
@@ -25,34 +26,33 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
-    @GetMapping("{email}")
-    public ResponseEntity<StudentProfile> getInfo (@PathVariable String email){
-        return studentService.getInfo(email);
+    @GetMapping("{id}")
+    public ResponseEntity<StudentProfile> getInfo (@PathVariable UUID id){
+        return studentService.getInfo(id);
     }
 
-    @PutMapping("{email}")
-    public ResponseEntity<String> update(@RequestBody StudentProfile profile){
-        return studentService.update(profile);
+    @PutMapping("{id}")
+    public ResponseEntity<String> update(@PathVariable UUID id, @RequestBody StudentProfile profile){
+        return studentService.update(id, profile);
     }
 
-    @GetMapping("{email}/advisor")
-    public ResponseEntity<TeacherProfile> findAdvisor(@PathVariable String email){
-        return studentService.findAdvisor(email);
+    @GetMapping("{id}/advisor")
+    public ResponseEntity<TeacherProfile> findAdvisor(@PathVariable UUID id){
+        return studentService.findAdvisor(id);
     }
 
-    @GetMapping("{email}/requested-teachers")
-    public ResponseEntity<List<TeacherProfile>> getAllSendRequestList(@PathVariable String email) {
-        return studentService.getAllSendRequestList(email);
+    @GetMapping("{id}/requested-teachers")
+    public ResponseEntity<List<TeacherProfile>> getAllSendRequestList(@PathVariable UUID id) {
+        return studentService.getAllSendRequestList(id);
     }
 
-    @PostMapping("{student-id}/available-teachers/{teacher-id}")
+    @PostMapping("{student-id}/available-teachers")
     public ResponseEntity<String> addRequest (@RequestBody AdvisorRequest request){
         return studentService.addRequest(request);
-
     }
 
-    @GetMapping("{email}/available-teachers")
-    public ResponseEntity<List<TeacherProfile>> getAvailableTeachers(@PathVariable String email){
-        return studentService.getAvailableTeachers(email);
+    @GetMapping("{id}/available-teachers")
+    public ResponseEntity<List<TeacherProfile>> getAvailableTeachers(@PathVariable UUID id){
+        return studentService.getAvailableTeachers(id);
     }
 }

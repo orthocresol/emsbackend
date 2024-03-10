@@ -4,13 +4,15 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.Data;
 
+import java.util.UUID;
+
 @Data
 @Entity
 public class Student {
     @Id
-    private Integer id;
+    private UUID id;
     private String dept;
     private String studentID;
     private String batch;
-    private Integer advisorID;
+    private UUID advisorID;
 }
